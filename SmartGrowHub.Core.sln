@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartGrowHub.Domain", "SmartGrowHub.Domain\SmartGrowHub.Domain.csproj", "{CDD9988D-9865-4609-ADD3-8C60FF9620DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartGrowHub.Application", "SmartGrowHub.Application\SmartGrowHub.Application.csproj", "{DBE7FF2A-4C05-43DC-875B-FECCC955D232}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CDD9988D-9865-4609-ADD3-8C60FF9620DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDD9988D-9865-4609-ADD3-8C60FF9620DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDD9988D-9865-4609-ADD3-8C60FF9620DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDD9988D-9865-4609-ADD3-8C60FF9620DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBE7FF2A-4C05-43DC-875B-FECCC955D232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBE7FF2A-4C05-43DC-875B-FECCC955D232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBE7FF2A-4C05-43DC-875B-FECCC955D232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBE7FF2A-4C05-43DC-875B-FECCC955D232}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A5CD1573-3832-4848-B393-EE1C6B4F2BB0}
+	EndGlobalSection
+EndGlobal
