@@ -9,10 +9,6 @@ public sealed record AccessToken : DomainType<AccessToken, string>
     public static implicit operator string(AccessToken token) => token.Value;
     public static explicit operator AccessToken(string value) => From(value).ThrowIfFail();
 
-    public static Fin<AccessToken> Create(string accessTokenRaw) =>
-        from nonEmptyString in NonEmptyString.From(accessTokenRaw)
-        select new AccessToken(nonEmptyString);
-
     public static Fin<AccessToken> From(string repr) =>
         from nonEmptyString in NonEmptyString.From(repr)
         select new AccessToken(nonEmptyString);

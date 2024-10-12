@@ -13,8 +13,8 @@ public sealed record NonEmptyString : DomainType<NonEmptyString, string>
     public static implicit operator string(NonEmptyString value) => value.To();
     public static explicit operator NonEmptyString(string value) => From(value).ThrowIfFail();
 
-    public static Fin<NonEmptyString> From(string rawValue) =>
-        !string.IsNullOrWhiteSpace(rawValue) ? new NonEmptyString(rawValue)
+    public static Fin<NonEmptyString> From(string repr) =>
+        !string.IsNullOrWhiteSpace(repr) ? new NonEmptyString(repr)
             : FinFail<NonEmptyString>(Error);
 
     public string To() => _value;

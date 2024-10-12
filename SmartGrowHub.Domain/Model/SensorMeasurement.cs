@@ -7,7 +7,7 @@ public sealed record SensorMeasurement(
     SensorType Type,
     NonEmptyString Value,
     NonEmptyString Unit,
-    CreatedAt CreatedAt)
+    DateTime CreatedAt)
 {
     public override int GetHashCode() => Id.GetHashCode();
 

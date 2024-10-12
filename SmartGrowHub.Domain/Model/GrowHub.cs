@@ -6,9 +6,9 @@ namespace SmartGrowHub.Domain.Model;
 
 public sealed record GrowHub(
     Id<GrowHub> Id,
-    ImmutableArray<SensorMeasurement> SensorMeasurements,
+    ImmutableArray<SensorMeasurement> Measurements,
     ImmutableArray<Setting> Settings,
-    Option<Id<Plant>> Plant)
+    Option<Plant> Plant)
 {
     private static readonly ItemAlreadyExistsException AlreadyExistsException =
         new(nameof(SensorMeasurement), nameof(GrowHub));
@@ -17,8 +17,14 @@ public sealed record GrowHub(
 
     public bool Equals(GrowHub? other) => other is not null && Id == other.Id;
 
-    public Fin<GrowHub> AddReading(SensorMeasurement reading) =>
-        !SensorMeasurements.Contains(reading)
-            ? this with { SensorMeasurements = SensorMeasurements.Add(reading) }
+    public Fin<GrowHub> AddMeasurement(SensorMeasurement reading) =>
+        !Measurements.Contains(reading)
+            ? this with { Measurements = Measurements.Add(reading) }
             : FinFail<GrowHub>(AlreadyExistsException);
+
+    public Fin<GrowHub> AddOrUpdatePlant(Plant plant) =>
+        this with { Plant = plant };
+
+    public Fin<GrowHub> RemovePlant() =>
+        this with { Plant = None };
 }
