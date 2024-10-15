@@ -1,34 +1,30 @@
-﻿using SmartGrowHub.Domain.Common;
-using SmartGrowHub.Domain.Exceptions;
+﻿using SmartGrowHub.Domain.Abstractions;
+using SmartGrowHub.Domain.Common;
 using System.Collections.Immutable;
 
 namespace SmartGrowHub.Domain.Model;
 
-public sealed record Setting(
-    Id<Setting> Id,
-    SettingType Type,
-    SettingMode Mode,
-    ImmutableArray<Component> Components)
+public sealed class Setting(
+    Id<Setting> id,
+    SettingType type,
+    SettingMode mode,
+    ImmutableDictionary<Id<Component>, Component> components)
+    : Entity<Setting>(id)
 {
-    private static readonly ItemNotFoundException NotFoundException =
-        new(nameof(Component), nameof(Setting));
+    private Setting(Setting original) : this(
+        original.Id, original.Type,
+        original.Mode, original.Components)
+    { }
 
-    private static readonly ItemAlreadyExistsException AlreadyExistsException =
-        new(nameof(Component), nameof(Setting));
+    public SettingType Type { get; init; } = type;
 
-    public override int GetHashCode() => Id.GetHashCode();
+    public SettingMode Mode { get; init; } = mode;
 
-    public bool Equals(Setting? other) => other is not null && Id == other.Id;
+    public ImmutableDictionary<Id<Component>, Component> Components { get; init; } = components;
 
-    public Fin<Setting> AddComponent(Component component) =>
-        !Components.Contains(component)
-            ? this with { Components = Components.Add(component) }
-            : FinFail<Setting>(AlreadyExistsException);
+    public Setting AddComponent(Component component) =>
+        new(this) { Components = Components.Add(component.Id, component) };
 
-    public Fin<Setting> RemoveComponent(Component component)
-    {
-        int index = Components.IndexOf(component);
-        if (index is -1) return FinFail<Setting>(NotFoundException);
-        return this with { Components = Components.RemoveAt(index) };
-    }
+    public Setting RemoveComponent(Id<Component> id) =>
+        new(this) { Components = Components.Remove(id) };
 }

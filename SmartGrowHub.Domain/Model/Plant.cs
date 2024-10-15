@@ -1,10 +1,19 @@
-﻿using SmartGrowHub.Domain.Common;
+﻿using SmartGrowHub.Domain.Abstractions;
+using SmartGrowHub.Domain.Common;
 
 namespace SmartGrowHub.Domain.Model;
 
-public sealed record Plant(Id<Plant> Id, NonEmptyString Name)
+public sealed class Plant(
+    Id<Plant> id,
+    NonEmptyString name)
+    : Entity<Plant>(id)
 {
-    public override int GetHashCode() => Id.GetHashCode();
+    private Plant(Plant original) : this(
+        original.Id, original.Name)
+    { }
 
-    public bool Equals(Plant? other) => other is not null && Id == other.Id;
+    public NonEmptyString Name { get; init; } = name;
+
+    public Plant UpdateName(NonEmptyString name) =>
+        new(this) { Name = name };
 }

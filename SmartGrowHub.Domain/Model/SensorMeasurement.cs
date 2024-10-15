@@ -1,15 +1,21 @@
-﻿using SmartGrowHub.Domain.Common;
+﻿using SmartGrowHub.Domain.Abstractions;
+using SmartGrowHub.Domain.Common;
 
 namespace SmartGrowHub.Domain.Model;
 
-public sealed record SensorMeasurement(
-    Id<SensorMeasurement> Id,
-    SensorType Type,
-    NonEmptyString Value,
-    NonEmptyString Unit,
-    DateTime CreatedAt)
+public sealed class SensorMeasurement(
+    Id<SensorMeasurement> id,
+    SensorType type,
+    NonEmptyString value,
+    NonEmptyString unit,
+    DateTime createdAt)
+    : Entity<SensorMeasurement>(id)
 {
-    public override int GetHashCode() => Id.GetHashCode();
+    public SensorType Type { get; init; } = type;
 
-    public bool Equals(SensorMeasurement? other) => other is not null && Id == other.Id;
+    public NonEmptyString Value { get; init; } = value;
+
+    public NonEmptyString Unit { get; init; } = unit;
+
+    public DateTime CreatedAt { get; init; } = createdAt;
 }

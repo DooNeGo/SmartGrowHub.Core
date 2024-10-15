@@ -1,30 +1,31 @@
-﻿using SmartGrowHub.Domain.Common;
-using SmartGrowHub.Domain.Exceptions;
+﻿using SmartGrowHub.Domain.Abstractions;
+using SmartGrowHub.Domain.Common;
 using System.Collections.Immutable;
 
 namespace SmartGrowHub.Domain.Model;
 
-public sealed record GrowHub(
-    Id<GrowHub> Id,
-    ImmutableArray<SensorMeasurement> Measurements,
-    ImmutableArray<Setting> Settings,
-    Option<Plant> Plant)
+public sealed class GrowHub(
+    Id<GrowHub> id,
+    ImmutableDictionary<Id<Setting>, Setting> settings,
+    Option<Plant> plant)
+    : Entity<GrowHub>(id)
 {
-    private static readonly ItemAlreadyExistsException AlreadyExistsException =
-        new(nameof(SensorMeasurement), nameof(GrowHub));
+    private static readonly Error SettingNotFound = Error.New("The grow hub setting was not found");
 
-    public override int GetHashCode() => Id.GetHashCode();
+    private GrowHub(GrowHub original) : this(
+        original.Id, original.Settings,
+        original.Plant)
+    { }
 
-    public bool Equals(GrowHub? other) => other is not null && Id == other.Id;
+    public ImmutableDictionary<Id<Setting>, Setting> Settings { get; init; } = settings;
 
-    public Fin<GrowHub> AddMeasurement(SensorMeasurement reading) =>
-        !Measurements.Contains(reading)
-            ? this with { Measurements = Measurements.Add(reading) }
-            : FinFail<GrowHub>(AlreadyExistsException);
+    public Option<Plant> Plant { get; init; } = plant;
 
-    public Fin<GrowHub> AddOrUpdatePlant(Plant plant) =>
-        this with { Plant = plant };
+    public GrowHub UpdatePlant(Option<Plant> plant) =>
+        new(this) { Plant = plant };
 
-    public Fin<GrowHub> RemovePlant() =>
-        this with { Plant = None };
+    public Fin<GrowHub> UpdateSetting(Setting setting) =>
+        Settings.ContainsKey(setting.Id)
+            ? new GrowHub(this) { Settings = Settings.SetItem(setting.Id, setting) }
+            : SettingNotFound;
 }

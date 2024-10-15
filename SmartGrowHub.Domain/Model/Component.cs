@@ -1,14 +1,18 @@
-﻿using SmartGrowHub.Domain.Common;
+﻿using SmartGrowHub.Domain.Abstractions;
+using SmartGrowHub.Domain.Common;
 
 namespace SmartGrowHub.Domain.Model;
 
-public sealed record Component(
-    Id<Component> Id,
-    ComponentType Type,
-    int Value,
-    NonEmptyString Unit)
+public sealed class Component(
+    Id<Component> id,
+    ComponentType type,
+    int value,
+    NonEmptyString unit)
+    : Entity<Component>(id)
 {
-    public override int GetHashCode() => Id.GetHashCode();
+    public ComponentType Type { get; init; } = type;
 
-    public bool Equals(Component? other) => other is not null && Id == other.Id;
+    public int Value { get; init; } = value;
+
+    public NonEmptyString Unit { get; init; } = unit;
 }
