@@ -9,9 +9,6 @@ public sealed class UserSession(
     AuthTokens authTokens)
     : Entity<UserSession>(id)
 {
-    private static readonly Error RefreshTokenExpiredError =
-        Error.New("The refresh token has been already expired");
-
     private UserSession(UserSession original) : this(
         original.Id, original.UserId, original.AuthTokens)
     { }
