@@ -1,5 +1,6 @@
 ﻿using SmartGrowHub.Domain.Abstractions;
 using SmartGrowHub.Domain.Common;
+using SmartGrowHub.Domain.Errors;
 using System.Collections.Immutable;
 
 namespace SmartGrowHub.Domain.Model;
@@ -10,8 +11,6 @@ public sealed class GrowHub(
     Option<Plant> plant)
     : Entity<GrowHub>(id)
 {
-    private static readonly Error SettingNotFound = Error.New("The grow hub setting was not found");
-
     private GrowHub(GrowHub original) : this(
         original.Id, original.Settings,
         original.Plant)
@@ -27,5 +26,5 @@ public sealed class GrowHub(
     public Fin<GrowHub> UpdateSetting(Setting setting) =>
         Settings.ContainsKey(setting.Id)
             ? new GrowHub(this) { Settings = Settings.SetItem(setting.Id, setting) }
-            : SettingNotFound;
+            : DomainErrors.SettingNotFoundError;
 }
