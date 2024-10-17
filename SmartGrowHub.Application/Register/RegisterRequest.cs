@@ -5,6 +5,6 @@ namespace SmartGrowHub.Application.Register;
 
 public sealed record RegisterRequest(
     UserName UserName,
-    Password Password,
+    PlainTextPassword Password,
     EmailAddress EmailAddress,
     NonEmptyString DisplayName);

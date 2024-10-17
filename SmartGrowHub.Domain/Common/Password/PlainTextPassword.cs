@@ -11,6 +11,9 @@ public sealed record PlainTextPassword : Password, DomainType<PlainTextPassword,
 
     private PlainTextPassword(string value) => _value = value;
 
+    public static implicit operator string(PlainTextPassword password) => password.To();
+    public static explicit operator PlainTextPassword(string value) => From(value).ThrowIfFail();
+
     public static Fin<PlainTextPassword> From(string repr)
     {
         Fin<PlainTextPassword> result =
