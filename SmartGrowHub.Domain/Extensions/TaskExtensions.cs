@@ -24,5 +24,5 @@ public static class TaskExtensions
         liftIO(task.AsTask);
 
     public static IO<Unit> ToIO(this ValueTask task) =>
-        liftIO(task.AsTask().ToUnit);
+        liftIO(task.AsTask);
 }
