@@ -1,6 +1,6 @@
 ﻿namespace SmartGrowHub.Domain.Model;
 
-public enum ComponentType
+public enum SettingComponentType
 {
     Mode,
     Power,

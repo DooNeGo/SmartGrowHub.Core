@@ -8,7 +8,7 @@ public sealed class Setting(
     Id<Setting> id,
     SettingType type,
     SettingMode mode,
-    ImmutableDictionary<Id<Component>, Component> components)
+    ImmutableDictionary<Id<SettingComponent>, SettingComponent> components)
     : Entity<Setting>(id)
 {
     private Setting(Setting original) : this(
@@ -20,11 +20,11 @@ public sealed class Setting(
 
     public SettingMode Mode { get; init; } = mode;
 
-    public ImmutableDictionary<Id<Component>, Component> Components { get; init; } = components;
+    public ImmutableDictionary<Id<SettingComponent>, SettingComponent> Components { get; init; } = components;
 
-    public Setting AddComponent(Component component) =>
+    public Setting AddComponent(SettingComponent component) =>
         new(this) { Components = Components.Add(component.Id, component) };
 
-    public Setting RemoveComponent(Id<Component> id) =>
+    public Setting RemoveComponent(Id<SettingComponent> id) =>
         new(this) { Components = Components.Remove(id) };
 }

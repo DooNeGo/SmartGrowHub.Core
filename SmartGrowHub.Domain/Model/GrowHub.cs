@@ -7,14 +7,17 @@ namespace SmartGrowHub.Domain.Model;
 
 public sealed class GrowHub(
     Id<GrowHub> id,
+    NonEmptyString name,
     ImmutableDictionary<Id<Setting>, Setting> settings,
     Option<Plant> plant)
     : Entity<GrowHub>(id)
 {
     private GrowHub(GrowHub original) : this(
-        original.Id, original.Settings,
-        original.Plant)
+        original.Id, original.Name,
+        original.Settings, original.Plant)
     { }
+
+    public NonEmptyString Name { get; init; } = name;
 
     public ImmutableDictionary<Id<Setting>, Setting> Settings { get; init; } = settings;
 
