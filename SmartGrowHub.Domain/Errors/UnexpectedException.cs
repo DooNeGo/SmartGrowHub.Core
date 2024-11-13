@@ -1,4 +1,4 @@
-﻿namespace SmartGrowHub.WebApi.Infrastructure.Services;
+﻿namespace SmartGrowHub.Domain.Errors;
 
 public sealed class UnexpectedException(string message) : ErrorException(0)
 {
